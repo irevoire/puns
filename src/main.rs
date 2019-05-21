@@ -16,7 +16,7 @@ fn main() {
 
     let receiver = Arc::new(Mutex::new(receiver));
 
-    rouille::start_server("localhost:3000", move |_| {
+    rouille::start_server("localhost:8787", move |_| {
         let pun = receiver.lock().unwrap().recv().unwrap();
         Response::text(pun)
     });
