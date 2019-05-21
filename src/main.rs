@@ -1,5 +1,5 @@
 use rouille::Response;
-use std::sync::{mpsc::channel, Arc, Mutex};
+use std::sync::{mpsc::sync_channel, Arc, Mutex};
 use std::thread;
 
 mod pun;
@@ -8,7 +8,7 @@ fn main() {
     let filename = "./data/puns.csv";
     let mut pun = pun::Pun::new(filename).unwrap();
 
-    let (sender, receiver) = channel();
+    let (sender, receiver) = sync_channel(1);
 
     thread::spawn(move || loop {
         sender.send(pun.get()).unwrap();
